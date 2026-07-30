@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Penjelasan Hasil Kesehatan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #FAF6EE;
+    --paper-2: #F2ECDF;
+    --ink: #2B3A3A;
+    --ink-soft: #5B6B69;
+    --line: #DFD6C1;
+    --good: #6E8F72;
+    --good-bg: #E9F0E6;
+    --warn: #C98A3E;
+    --warn-bg: #F7ECD9;
+    --alert: #B44B32;
+    --alert-bg: #F5E3DB;
+    --card: #FFFFFF;
+    --focus: #3E6259;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Figtree', sans-serif;
+    font-size: 19px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  a, button, input, select{ font-family: inherit; }
+
+  .wrap{
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 20px 100px;
+  }
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    padding: 56px 20px 40px;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+    background:
+      radial-gradient(circle at 20% 20%, rgba(110,143,114,0.10), transparent 45%),
+      radial-gradient(circle at 85% 10%, rgba(201,138,62,0.10), transparent 40%);
+  }
+  header.hero .eyebrow{
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  header.hero h1{
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(32px, 6vw, 46px);
+    line-height: 1.15;
+    margin: 0 0 16px;
+    color: var(--ink);
+  }
+  header.hero p{
+    max-width: 520px;
+    margin: 0 auto;
+    color: var(--ink-soft);
+    font-size: 19px;
+  }
+
+  /* ---------- SECTION LABELS ---------- */
+  .section-title{
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 26px;
+    margin: 48px 0 6px;
+    color: var(--ink);
+  }
+  .section-sub{
+    color: var(--ink-soft);
+    font-size: 17px;
+    margin-bottom: 22px;
+  }
+
+  /* ---------- FORM CARD ---------- */
+  .card{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+
+  .field-group{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  @media (max-width: 520px){
+    .field-group{ grid-template-columns: 1fr; }
+  }
+
+  .field{
+    display:flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .field label{
+    font-weight: 700;
+    font-size: 16.5px;
+    color: var(--ink);
+  }
+  .field .hint{
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    margin-top: -4px;
+  }
+  .field input, .field select{
+    border: 1.5px solid var(--line);
+    background: var(--paper);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 19px;
+    color: var(--ink);
+    width: 100%;
+  }
+  .field input:focus, .field select:focus{
+    outline: 3px solid var(--focus);
+    outline-offset: 1px;
+    border-color: var(--focus);
+  }
+  .field-row{
+    display:flex;
+    gap: 14px;
+  }
+  .field-row .field{ flex:1; }
+
+  fieldset{
+    border: none;
+    padding: 0;
+    margin: 0 0 18px;
+  }
+  legend{
+    font-weight: 700;
+    font-size: 16.5px;
+    padding: 0;
+    margin-bottom: 8px;
+  }
+
+  .btn{
+    display: inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap: 10px;
+    width: 100%;
+    background: var(--focus);
+    color: #FBF8F1;
+    border: none;
+    border-radius: 14px;
+    padding: 18px 20px;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+  .btn:hover{ background: #33534A; }
+  .btn:focus-visible{ outline: 3px solid var(--warn); outline-offset: 2px; }
+
+  .optional-tag{
+    display:inline-block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    background: var(--paper-2);
+    border-radius: 999px;
+    padding: 3px 10px;
+    margin-left: 8px;
+    vertical-align: middle;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* ---------- RESULTS ---------- */
+  #results{ display:none; }
+  #results.show{ display:block; }
+
+  .result-card{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 8px solid var(--ink-soft);
+    border-radius: 16px;
+    padding: 26px 26px 24px;
+    margin-bottom: 20px;
+  }
+  .result-card.status-good{ border-left-color: var(--good); }
+  .result-card.status-warn{ border-left-color: var(--warn); }
+  .result-card.status-alert{ border-left-color: var(--alert); }
+
+  .result-top{
+    display:flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .result-name{
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 23px;
+    margin: 0;
+  }
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-weight: 800;
+    font-size: 15px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .pill::before{
+    content:"";
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    display:inline-block;
+  }
+  .status-good .pill{ background: var(--good-bg); color: #3E5A41; }
+  .status-good .pill::before{ background: var(--good); }
+  .status-warn .pill{ background: var(--warn-bg); color: #7A5321; }
+  .status-warn .pill::before{ background: var(--warn); }
+  .status-alert .pill{ background: var(--alert-bg); color: #7A3220; }
+  .status-alert .pill::before{ background: var(--alert); }
+
+  .result-value{
+    font-size: 17px;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+  .result-value b{ color: var(--ink); }
+
+  .gauge{ margin: 16px 0 18px; }
+  .gauge svg{ width:100%; height: auto; display:block; }
+
+  .result-explain{
+    font-size: 18px;
+    line-height: 1.6;
+  }
+  .result-explain p{ margin: 0 0 10px; }
+  .result-explain p:last-child{ margin-bottom: 0; }
+
+  .summary-banner{
+    text-align:center;
+    padding: 22px;
+    border-radius: 16px;
+    margin-bottom: 24px;
+    font-family: 'Fraunces', serif;
+    font-size: 21px;
+    font-weight: 600;
+  }
+  .summary-banner.status-good{ background: var(--good-bg); color: #3E5A41; }
+  .summary-banner.status-warn{ background: var(--warn-bg); color: #7A5321; }
+  .summary-banner.status-alert{ background: var(--alert-bg); color: #7A3220; }
+
+  .disclaimer{
+    background: var(--paper-2);
+    border-radius: 16px;
+    padding: 22px 24px;
+    font-size: 16.5px;
+    color: var(--ink-soft);
+    margin-top: 8px;
+    border: 1px solid var(--line);
+  }
+  .disclaimer b{ color: var(--ink); }
+
+  .reset-link{
+    display:block;
+    text-align:center;
+    margin-top: 22px;
+    color: var(--focus);
+    font-weight: 700;
+    cursor:pointer;
+    background:none;
+    border:none;
+    font-size: 17px;
+    text-decoration: underline;
+    width: 100%;
+  }
+
+  footer{
+    text-align:center;
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    padding: 30px 20px 0;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">Bantuan Membaca Asesmen Kesehatan</div>
+  <h1>Apa Arti Angka&nbsp;Ini?</h1>
+  <p>Isi hasil pemeriksaan pada tabel dibawah. Lalu serahkan penjelasannya kepada kami! </p>
+</header>
+
+<div class="wrap">
+
+  <div class="section-title">1. Data Diri</div>
+  <div class="section-sub">Usia, tinggi, dan berat badan dipakai untuk menghitung status berat badan.</div>
+
+  <div class="card">
+    <div class="field-group">
+      <div class="field">
+        <label for="age">Usia (tahun)</label>
+        <input type="number" id="age" inputmode="numeric" placeholder="Contoh: 30" min="1" max="120">
+      </div>
+      <div class="field">
+        <label for="gender">Jenis kelamin</label>
+        <select id="gender">
+          <option value="p">Perempuan</option>
+          <option value="l">Laki-laki</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="height">Tinggi badan (cm)</label>
+        <input type="number" id="height" inputmode="numeric" placeholder="Contoh: 158">
+      </div>
+      <div class="field">
+        <label for="weight">Berat badan (kg)</label>
+        <input type="number" id="weight" inputmode="numeric" placeholder="Contoh: 62">
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">2. Tekanan Darah</div>
+  <div class="section-sub">Biasanya tertulis pada tensimeter, contoh: 130/85 mmHg.</div>
+
+  <div class="card">
+    <div class="field-row">
+      <div class="field">
+        <label for="sistolik">Angka atas (sistolik)</label>
+        <input type="number" id="sistolik" inputmode="numeric" placeholder="Contoh: 130">
+      </div>
+      <div class="field">
+        <label for="diastolik">Angka bawah (diastolik)</label>
+        <input type="number" id="diastolik" inputmode="numeric" placeholder="Contoh: 85">
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">3. Gula Darah <span class="optional-tag">Opsional</span></div>
+  <div class="section-sub">Isi salah satu saja, atau dua-duanya jika ada. Batas normal berbeda tergantung puasa dan acak.</div>
+
+  <div class="card">
+    <div class="field">
+      <label for="gulaPuasa">Gula darah puasa (mg/dL)</label>
+      <div class="hint">Diambil setelah tidak makan/minum manis selama kurang lebih 8 jam, biasanya pagi hari sebelum sarapan.</div>
+      <input type="number" id="gulaPuasa" inputmode="numeric" placeholder="Contoh: 110">
+    </div>
+    <div class="field" style="margin-bottom:0;">
+      <label for="gulaSewaktu">Gula darah sewaktu (mg/dL)</label>
+      <div class="hint">Diambil kapan saja, tidak perlu puasa dulu.</div>
+      <input type="number" id="gulaSewaktu" inputmode="numeric" placeholder="Contoh: 150">
+    </div>
+  </div>
+
+
+  <div class="section-title">4. Asam Urat <span class="optional-tag">Opsional</span></div>
+  <div class="section-sub">Batas normalnya berbeda antara pria dan wanita (sudah memakai jenis kelamin yang diisi di atas).</div>
+
+  <div class="card">
+    <div class="field" style="margin-bottom:0;">
+      <label for="asamUrat">Hasil asam urat (mg/dL)</label>
+      <input type="number" id="asamUrat" inputmode="numeric" step="0.1" placeholder="Contoh: 6.2">
+    </div>
+  </div>
+
+  <div class="section-title">5. Kolesterol Total <span class="optional-tag">Opsional</span></div>
+  <div class="card">
+    <div class="field">
+      <label for="kolesterol">Hasil kolesterol total (mg/dL)</label>
+      <input type="number" id="kolesterol" inputmode="numeric" placeholder="Contoh: 190">
+    </div>
+  </div>
+
+  <button class="btn" id="btnCek">Lihat Penjelasan Hasil</button>
+
+  <div id="results" aria-live="polite"></div>
+
+</div>
+
+<footer>
+  Alat bantu baca hasil kesehatan — bukan pengganti pemeriksaan atau nasihat dokter.
+</footer>
+
+<script>
+function val(id){
+  const el = document.getElementById(id);
+  const v = el.value;
+  return v === '' ? null : parseFloat(v);
+}
+
+function gaugeSVG(min, max, value, zones, unitLabel){
+  // zones: array of {to, color} cumulative from min to max
+  const width = 640, height = 115;
+  const trackY = 46, trackH = 22;
+  const clampedValue = Math.max(min, Math.min(max, value));
+  const pct = (v) => ((v - min) / (max - min)) * width;
+
+  let bars = '';
+  let prev = min;
+  zones.forEach(z => {
+    const x1 = pct(prev);
+    const x2 = pct(Math.min(z.to, max));
+    bars += `<rect x="${x1}" y="${trackY}" width="${Math.max(0,x2-x1)}" height="${trackH}" fill="${z.color}"></rect>`;
+    prev = z.to;
+  });
+
+  const markerX = pct(clampedValue);
+
+  return `
+  <svg viewBox="0 0 ${width} ${height}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Posisi nilai ${value} ${unitLabel} pada skala">
+    <rect x="0" y="${trackY}" width="${width}" height="${trackH}" rx="11" fill="#EFE9DA"></rect>
+    <g style="clip-path: inset(0 0 0 0)">
+      <clipPath id="clip-${Math.round(Math.random()*100000)}"><rect x="0" y="${trackY}" width="${width}" height="${trackH}" rx="11"/></clipPath>
+    </g>
+    <svg x="0" y="0" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+      <defs>
+        <clipPath id="track-clip">
+          <rect x="0" y="${trackY}" width="${width}" height="${trackH}" rx="11"/>
+        </clipPath>
+      </defs>
+      <g clip-path="url(#track-clip)">
+        ${bars}
+      </g>
+      <line x1="${markerX}" y1="${trackY-10}" x2="${markerX}" y2="${trackY+trackH+10}" stroke="#2B3A3A" stroke-width="4" stroke-linecap="round"></line>
+      <circle cx="${markerX}" cy="${trackY-14}" r="7" fill="#2B3A3A"></circle>
+      <text x="${markerX}" y="${trackY+trackH+34}" text-anchor="middle" font-family="Figtree, sans-serif" font-size="20" font-weight="700" fill="#2B3A3A">${value}${unitLabel ? ' ' + unitLabel : ''}</text>
+    </svg>
+  </svg>`;
+}
+
+function card({name, status, valueText, gauge, paragraphs = []}){
+  const statusLabel = status === 'good' ? 'Normal' : status === 'warn' ? 'Perlu Diperhatikan' : 'Tinggi / Perlu Segera Diperiksa';
+  return `
+  <div class="result-card status-${status}">
+    <div class="result-top">
+      <h3 class="result-name">${name}</h3>
+      <span class="pill">${statusLabel}</span>
+    </div>
+    ${valueText ? `<div class="result-value">${valueText}</div>` : ''}
+    ${gauge ? `<div class="gauge">${gauge}</div>` : ''}
+    <div class="result-explain">${paragraphs.map(p => `<p>${p}</p>`).join('')}</div>
+  </div>`;
+}
+
+function worstStatus(list){
+  if(list.includes('alert')) return 'alert';
+  if(list.includes('warn')) return 'warn';
+  return 'good';
+}
+
+document.getElementById('btnCek').addEventListener('click', async () => {
+  const age = val('age');
+  const height = val('height');
+  const weight = val('weight');
+  const sis = val('sistolik');
+  const dia = val('diastolik');
+  const gulaPuasa = val('gulaPuasa');
+  const gulaSewaktu = val('gulaSewaktu');
+  const asamUrat = val('asamUrat');
+  const gender = document.getElementById('gender').value;
+  const kolesterol = val('kolesterol');
+
+  let cards = [];
+  let statuses = [];
+
+  // ---- BMI ----
+  if(height && weight){
+    const h = height / 100;
+    const bmi = weight / (h*h);
+    const bmiRounded = Math.round(bmi * 10) / 10;
+    let status, paragraphs;
+    if(bmi < 18.5){
+      status = 'warn';
+      paragraphs = [
+        `Berat badan tergolong <b>kurus</b> untuk tinggi badan ini.`,
+        `Berat badan yang kurang bisa membuat tubuh lebih lemah menghadapi penyakit. Coba tambah porsi makan bergizi sedikit demi sedikit, dan sebaiknya ceritakan ke dokter jika berat badan terus turun tanpa sebab yang jelas.`
+      ];
+    } else if(bmi < 23){
+      status = 'good';
+      paragraphs = [
+        `Berat badan tergolong <b>ideal</b> untuk tinggi badan ini. Ini kabar baik.`,
+        `Pertahankan pola makan dan kebiasaan yang sudah baik ini.`
+      ];
+    } else if(bmi < 25){
+      status = 'warn';
+      paragraphs = [
+        `Berat badan sedikit <b>berlebih</b> untuk tinggi badan ini.`,
+        `Belum berbahaya, tapi sebaiknya mulai lebih hati-hati menjaga porsi makan dan lebih sering bergerak, misalnya jalan kaki santai setiap hari.`
+      ];
+    } else {
+      status = 'alert';
+      paragraphs = [
+        `Berat badan tergolong <b>berlebih (obesitas)</b> untuk tinggi badan ini.`,
+        `Berat badan berlebih dapat meningkatkan risiko tekanan darah tinggi, gula darah tinggi, dan sakit jantung. Sebaiknya dibicarakan dengan dokter untuk mencari cara menurunkan berat badan yang aman.`
+      ];
+    }
+    statuses.push(status);
+    cards.push(card({
+      name: 'Berat Badan (IMT)',
+      status,
+      valueText: `Tinggi <b>${height} cm</b>, berat <b>${weight} kg</b> → Indeks Massa Tubuh: <b>${bmiRounded}</b>`,
+      gauge: gaugeSVG(10, 32, bmiRounded, [
+        {to: 18.5, color:'#F7ECD9'},
+        {to: 23, color:'#E9F0E6'},
+        {to: 25, color:'#F7ECD9'},
+        {to: 32, color:'#F5E3DB'},
+      ], ''),
+      paragraphs
+    }));
+  }
+
+  // ---- Tekanan Darah (mengikuti ESC 2024) ----
+  if(sis && dia){
+    let status, label, paragraphs;
+    if(sis >= 180 || dia >= 120){
+      status = 'alert'; label = 'Krisis Hipertensi — Segera Periksa';
+      paragraphs = [
+        `Tekanan darah <b>${sis}/${dia} mmHg</b> ini <b>sangat tinggi</b> dan tergolong krisis hipertensi.`,
+        `Sebaiknya segera diukur ulang. Bila tetap setinggi ini, atau disertai keluhan seperti sakit kepala hebat, nyeri dada, sesak napas, atau pandangan kabur, segera pergi ke fasilitas kesehatan terdekat.`
+      ];
+    } else if(sis >= 140 || dia >= 90){
+      status = 'alert'; label = 'Hipertensi';
+      paragraphs = [
+        `Tekanan darah <b>${sis}/${dia} mmHg</b> ini tergolong <b>hipertensi (darah tinggi)</b>.`,
+        `Sebaiknya diukur ulang beberapa kali di hari berbeda untuk memastikan, lalu diperiksakan ke dokter. Tekanan darah tinggi yang dibiarkan bisa memberi beban lebih pada jantung dan pembuluh darah.`
+      ];
+    } else if(sis >= 120 || dia >= 70){
+      status = 'warn'; label = 'Meningkat';
+      paragraphs = [
+        `Tekanan darah <b>${sis}/${dia} mmHg</b> ini masuk kategori <b>meningkat</b> — belum disebut darah tinggi, tapi sudah di atas batas paling sehat.`,
+        `Ini saat yang baik untuk mulai mengurangi garam dan makanan asin, menjaga berat badan, serta lebih sering jalan kaki, supaya tidak terus naik menjadi darah tinggi.`
+      ];
+    } else {
+      status = 'good'; label = 'Tidak Meningkat (Normal)';
+      paragraphs = [
+        `Tekanan darah <b>${sis}/${dia} mmHg</b> ini normal. Bagus, tidak ada yang perlu dikhawatirkan dari sisi ini.`,
+        `Tetap jaga pola makan rendah garam dan istirahat cukup agar tetap terjaga.`
+      ];
+    }
+    statuses.push(status);
+    cards.push(card({
+      name: 'Tekanan Darah',
+      status,
+      valueText: `Hasil: <b>${sis}/${dia} mmHg</b> — kategori: <b>${label}</b>`,
+      gauge: gaugeSVG(80, 190, sis, [
+        {to: 120, color:'#E9F0E6'},
+        {to: 140, color:'#F7ECD9'},
+        {to: 180, color:'#F5E3DB'},
+        {to: 190, color:'#F5E3DB'},
+      ], 'mmHg'),
+      paragraphs
+    }));
+  }
+
+
+  // ---- Gula Darah Puasa ----
+  if(gulaPuasa){
+    let status, label, paragraphs;
+    if(gulaPuasa < 100){ status='good'; label='Normal'; }
+    else if(gulaPuasa < 126){ status='warn'; label='Pradiabetes'; }
+    else { status='alert'; label='Diabetes'; }
+    paragraphs = status==='good' ? [
+      `Gula darah puasa <b>${gulaPuasa} mg/dL</b> ini normal.`,
+      `Pertahankan pola makan sehat dan jaga berat badan.`
+    ] : status==='warn' ? [
+      `Gula darah puasa <b>${gulaPuasa} mg/dL</b> ini masuk kategori <b>pradiabetes</b>, artinya lebih tinggi dari normal namun belum disebut diabetes.`,
+      `Ini adalah tanda peringatan dini. Mengurangi makanan dan minuman manis serta lebih sering bergerak dapat membantu. Sebaiknya diperiksakan ulang ke dokter.`
+    ] : [
+      `Gula darah puasa <b>${gulaPuasa} mg/dL</b> ini masuk kategori <b>diabetes</b>.`,
+      `Sebaiknya segera diperiksakan ke dokter untuk pemeriksaan lanjutan dan penanganan yang tepat.`
+    ];
+    statuses.push(status);
+    cards.push(card({
+      name: 'Gula Darah Puasa',
+      status,
+      valueText: `Hasil: <b>${gulaPuasa} mg/dL</b> — kategori: <b>${label}</b>`,
+      gauge: gaugeSVG(40, 300, gulaPuasa, [
+        {to:100,color:'#E9F0E6'},{to:126,color:'#F7ECD9'},{to:300,color:'#F5E3DB'}
+      ], 'mg/dL'),
+      paragraphs
+    }));
+  }
+
+  // ---- Gula Darah Sewaktu (mengikuti PERKENI: plasma vena) ----
+  if(gulaSewaktu){
+    let status, label, paragraphs;
+    if(gulaSewaktu < 100){ status='good'; label='Normal'; }
+    else if(gulaSewaktu < 200){ status='warn'; label='Belum Pasti Diabetes'; }
+    else { status='alert'; label='Diabetes'; }
+    paragraphs = status==='good' ? [
+      `Gula darah sewaktu <b>${gulaSewaktu} mg/dL</b> ini normal.`
+    ] : status==='warn' ? [
+      `Gula darah sewaktu <b>${gulaSewaktu} mg/dL</b> ini masuk kategori <b>belum pasti diabetes</b> — lebih tinggi dari normal, tapi belum cukup tinggi untuk dipastikan diabetes.`,
+      `Karena diukur "sewaktu" (bukan puasa), hasilnya juga bisa dipengaruhi makanan terakhir. Sebaiknya periksa ulang dengan gula darah puasa untuk kepastian.`
+    ] : [
+      `Gula darah sewaktu <b>${gulaSewaktu} mg/dL</b> ini masuk kategori <b>diabetes</b>.`,
+      `Sebaiknya segera diperiksakan ke dokter.`
+    ];
+    statuses.push(status);
+    cards.push(card({
+      name: 'Gula Darah Sewaktu',
+      status,
+      valueText: `Hasil: <b>${gulaSewaktu} mg/dL</b> — kategori: <b>${label}</b>`,
+      gauge: gaugeSVG(40, 300, gulaSewaktu, [
+        {to:100,color:'#E9F0E6'},{to:200,color:'#F7ECD9'},{to:300,color:'#F5E3DB'}
+      ], 'mg/dL'),
+      paragraphs
+    }));
+  }
+
+
+  // ---- Asam Urat ----
+  if(asamUrat){
+    const isPria = gender === 'l';
+    const batasNormalAtas = isPria ? 7.0 : 6.0;
+    const batasNormalBawah = isPria ? 3.4 : 2.4;
+    let status, label, paragraphs;
+    if(asamUrat > batasNormalAtas){
+      status = 'alert'; label = 'Tinggi (Hiperurisemia)';
+      paragraphs = [
+        `Asam urat <b>${asamUrat} mg/dL</b> ini di atas batas normal untuk ${isPria ? 'pria' : 'wanita'} (normal: ${batasNormalBawah}–${batasNormalAtas} mg/dL).`,
+        `Kadar asam urat yang tinggi bisa menyebabkan nyeri sendi mendadak (gout), terutama di jempol kaki, lutut, atau pergelangan kaki. Kurangi makanan tinggi purin seperti jeroan, seafood, dan minuman beralkohol, perbanyak minum air putih, dan sebaiknya diperiksakan ke dokter, terutama jika sudah ada nyeri sendi.`
+      ];
+    } else if(asamUrat < batasNormalBawah){
+      status = 'warn'; label = 'Rendah';
+      paragraphs = [
+        `Asam urat <b>${asamUrat} mg/dL</b> ini sedikit di bawah batas normal untuk ${isPria ? 'pria' : 'wanita'} (normal: ${batasNormalBawah}–${batasNormalAtas} mg/dL).`,
+        `Angka rendah biasanya tidak berbahaya, tapi bila disertai keluhan lain sebaiknya tetap ditanyakan ke dokter.`
+      ];
+    } else {
+      status = 'good'; label = 'Normal';
+      paragraphs = [
+        `Asam urat <b>${asamUrat} mg/dL</b> ini normal untuk ${isPria ? 'pria' : 'wanita'}.`,
+        `Pertahankan pola makan yang seimbang dan tidak berlebihan mengonsumsi jeroan atau seafood.`
+      ];
+    }
+    statuses.push(status);
+    cards.push(card({
+      name: 'Asam Urat',
+      status,
+      valueText: `Hasil: <b>${asamUrat} mg/dL</b> (${isPria ? 'pria' : 'wanita'}) — kategori: <b>${label}</b>`,
+      gauge: gaugeSVG(1, 10, asamUrat, [
+        {to: batasNormalBawah, color:'#F7ECD9'},
+        {to: batasNormalAtas, color:'#E9F0E6'},
+        {to: 10, color:'#F5E3DB'},
+      ], 'mg/dL'),
+      paragraphs
+    }));
+  }
+
+  // ---- Kolesterol ----
+  if(kolesterol){
+    let status, label, paragraphs;
+    if(kolesterol < 200){ status='good'; label='Normal'; }
+    else if(kolesterol < 240){ status='warn'; label='Ambang Batas Tinggi'; }
+    else { status='alert'; label='Tinggi'; }
+    paragraphs = status==='good' ? [
+      `Kolesterol total <b>${kolesterol} mg/dL</b> ini normal.`
+    ] : status==='warn' ? [
+      `Kolesterol total <b>${kolesterol} mg/dL</b> ini di ambang batas tinggi.`,
+      `Coba kurangi makanan berlemak dan gorengan, perbanyak sayur dan buah. Sebaiknya diperiksa ulang beberapa bulan lagi.`
+    ] : [
+      `Kolesterol total <b>${kolesterol} mg/dL</b> ini tergolong <b>tinggi</b>.`,
+      `Kolesterol tinggi dalam jangka panjang dapat meningkatkan risiko penyakit jantung dan stroke. Sebaiknya dibicarakan dengan dokter.`
+    ];
+    statuses.push(status);
+    cards.push(card({
+      name: 'Kolesterol Total',
+      status,
+      valueText: `Hasil: <b>${kolesterol} mg/dL</b> — kategori: <b>${label}</b>`,
+      gauge: gaugeSVG(120, 300, kolesterol, [
+        {to:200,color:'#E9F0E6'},{to:240,color:'#F7ECD9'},{to:300,color:'#F5E3DB'}
+      ], 'mg/dL'),
+      paragraphs
+    }));
+  }
+// ==========================================
+  // MULAI KODE INTEGRASI MACHINE LEARNING (API)
+  // ==========================================
+  
+  // Pastikan data yang diminta oleh model Python tidak kosong
+  if (age && sis && gulaPuasa && height && weight) {
+    const h = height / 100;
+    const hitungBMI = weight / (h * h);
+
+    // Siapkan kotak paket data untuk dikirim ke Python
+    const dataKirim = {
+      umur: age,
+      tensi_sistolik: sis,
+      gula_puasa: gulaPuasa,
+      bmi: parseFloat(hitungBMI.toFixed(1))
+    };
+
+    try {
+      // Panggil API Python via localhost
+      const response = await fetch('http://127.0.0.1:8000/prediksi', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dataKirim)
+      });
+
+      if (response.ok) {
+        const hasilML = await response.json();
+
+        // Tentukan warna status (hijau atau merah) berdasarkan jawaban AI
+        const statusKlinis = hasilML.status_risiko.includes('Tinggi') ? 'alert' : 'good';
+
+        // Buat satu Card khusus untuk menampilkan kesimpulan Machine Learning
+        const kartuAI = card({
+          name: '🧠 Prediksi AI: Risiko Sindrom Metabolik',
+          status: statusKlinis,
+          valueText: `Berdasarkan analisis kombinasi holistik (Usia, Tensi, Gula, dan BMI).`,
+          gauge: gaugeSVG(0, 100, hasilML.persentase, [
+            {to: 30, color: '#E9F0E6'},
+            {to: 60, color: '#F7ECD9'},
+            {to: 100, color: '#F5E3DB'}
+          ], '%'),
+          paragraphs: [
+            `<b>Hasil Analisis:</b> ${hasilML.status_risiko} dengan probabilitas <b>${hasilML.persentase}%</b>.`,
+            `${hasilML.pesan}`
+          ]
+        });
+
+        // Masukkan Card AI ke urutan paling ATAS (sebagai ringkasan utama)
+        cards.unshift(kartuAI); 
+      }
+    } catch (error) {
+      console.error("Gagal terhubung ke API ML:", error);
+    }
+  }
+  
+  // ==========================================
+  // AKHIR KODE INTEGRASI MACHINE LEARNING
+  // ==========================================
+  const resultsEl = document.getElementById('results');
+
+  if(cards.length === 0){
+    resultsEl.innerHTML = `<div class="disclaimer"><b>Belum ada data yang bisa dijelaskan.</b> Silakan isi minimal tinggi &amp; berat badan, atau tekanan darah, lalu tekan tombol lagi.</div>`;
+    resultsEl.classList.add('show');
+    resultsEl.scrollIntoView({behavior:'smooth', block:'start'});
+    return;
+  }
+
+  const overall = worstStatus(statuses);
+  const bannerText = overall === 'good'
+    ? '✅ Secara umum, hasil yang diisi berada dalam batas normal.'
+    : overall === 'warn'
+    ? '⚠️ Ada beberapa hasil yang perlu diperhatikan, meski belum darurat.'
+    : '🔴 Ada hasil yang tergolong tinggi — sebaiknya segera dikonsultasikan ke dokter.';
+
+  resultsEl.innerHTML = `
+    <div class="section-title" style="margin-top:56px;">Penjelasan Hasil</div>
+    <div class="summary-banner status-${overall}">${bannerText}</div>
+    ${cards.join('')}
+    <div class="disclaimer">
+      <b>Catatan penting:</b> Penjelasan ini hanya membantu membaca angka hasil pemeriksaan berdasarkan panduan kesehatan umum. Ini <b>bukan diagnosis</b> dan tidak menggantikan pemeriksaan dokter. Jika ada keluhan seperti nyeri dada, sesak napas, pusing berat, atau tidak enak badan, segera ke fasilitas kesehatan terdekat.
+    </div>
+    <button class="reset-link" id="btnReset">Isi Ulang / Cek Data Lain</button>
+  `;
+  resultsEl.classList.add('show');
+
+  document.getElementById('btnReset').addEventListener('click', () => {
+    ['age','height','weight','sistolik','diastolik','gulaPuasa','gulaSewaktu','asamUrat','kolesterol'].forEach(id => document.getElementById(id).value = '');
+    resultsEl.classList.remove('show');
+    resultsEl.innerHTML = '';
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  resultsEl.scrollIntoView({behavior:'smooth', block:'start'});
+});
+</script>
+
+</body>
+</html>
